@@ -2,12 +2,17 @@ const express = require("express");
 require("express-async-errors");
 const Config = require("./Utils/Config");
 const appConfig = Config.load("app.json");
+const log = require("./modules/logger");
 
 const app = express();
 
 // 把body解析成json对象
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// 跨域
+var cors = require('cors')
+app.use(cors());
 
 // API文档
 const swagger = require("./modules/swagger");
@@ -20,18 +25,15 @@ app.use(staticFile);
 const upload = require("./modules/upload");
 upload.init(app);
 
-// 跨域
-var cors = require('cors')
-app.use(cors());
-
 // 未知路由处理
 app.use((req, res) => {
   res.status(404);
+  log.warn("404: ", req.url, "query = ", req.query, "body = ", req.body);
   throw new Error("请求地址不存在！");
 });
 // 统一错误处理
 app.use(async (err, req, res, next) => {
-  console.error("======= error @ Server: ", err.message);
+  log.error("统一错误处理：", err.message);
   const statusCode = res.statusCode || 500;
   res.status(statusCode).json(err.message);
 });
