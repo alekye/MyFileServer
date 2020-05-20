@@ -22,6 +22,7 @@ const config = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
+      { from: "public", to:"public" },
       { from: "src/config", to:"config" }
     ]),
     new webpack.DefinePlugin({ "global.GENTLY": false })
