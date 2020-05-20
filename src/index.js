@@ -39,4 +39,5 @@ app.use(async (err, req, res, next) => {
 });
 // 启动http服务
 const port = appConfig.port || 3030;
-app.listen(port, () => console.log(`Server @ http://localhost:${port}!`));
+const host = appConfig.host || '0.0.0.0';
+app.listen(port, host, () => console.log(`Server @ http://${host}:${port} started!`));
