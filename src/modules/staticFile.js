@@ -16,7 +16,7 @@ var options = {
   }
 };
 
-const fileDir = path.join(process.mainModule.path, appConfig.fileDir);
-console.log("fileDir = ", fileDir);
+const rootDir = path.join(process.mainModule.path, appConfig.root);
+console.log("rootDir = ", rootDir);
 
-module.exports = express.static(fileDir, options);
+module.exports = express.static(rootDir, options);

@@ -1,5 +1,5 @@
 # upload files
-public/files
+src/wwwroot/file
 
 # Logs
 logs

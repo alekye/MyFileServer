@@ -7,26 +7,29 @@ const Config = require("../Utils/Config");
 const appConfig = Config.load("app.json");
 const moment = require("moment");
 
-const API_UPLOAD = "/api/upload";
-const UPLOAD_DIR = "files/images";
+const API_UPLOAD = "/file/upload";
+const fileDir = "file";
 
 const upload = {};
 
 upload.init = (app) => {
-  const publicDir = path.join(process.mainModule.path, appConfig.fileDir);
-  log.info("publicDir = ", publicDir);
+  const rootDir = path.join(process.mainModule.path, appConfig.root);
+  log.info("rootDir = ", rootDir);
   // 上传文件
   app.post(API_UPLOAD, async (req, res) => {
-    const imagesDir = path.join(UPLOAD_DIR, moment().format("YYYYMMDD"));
-    const fullImagesDir = path.join(publicDir, imagesDir);
-    if (!fs.existsSync(fullImagesDir)) {
-      // 创建目录
-      fs.mkdirSync(fullImagesDir, { recursive: true });
+    let relativeDir = fileDir;
+    if (appConfig.dateDir) {
+      relativeDir = path.join(relativeDir, moment().format(appConfig.dateDir));
     }
-    log.info("uploadfile dir = ", fullImagesDir);
+    const fullDir = path.join(rootDir, relativeDir);
+    if (!fs.existsSync(fullDir)) {
+      // 创建目录
+      fs.mkdirSync(fullDir, { recursive: true });
+    }
+    log.info("upload fullDir = ", fullDir);
     const form = formidable({
       encoding: "utf-8",
-      uploadDir: fullImagesDir,
+      uploadDir: fullDir,
       multiples: true,
       keepExtensions: true,
       maxFileSize: 10 * 1024 * 1024, // 10mb
@@ -46,11 +49,10 @@ upload.init = (app) => {
         data.name = f.name;
         data.type = f.type;
         data.mtime = f.mtime;
-        data.path = `${imagesDir}/${path.basename(f.path)}`;
+        data.path = `${relativeDir}/${path.basename(f.path)}`;
         log.info("upload file: ", data.path);
         res.json(data);
       } else {
-        // throw new Error("file 字段不存在！");
         res.status(400).json("file 字段不存在！");
       }
     });

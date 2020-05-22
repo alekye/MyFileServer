@@ -1,4 +1,5 @@
 {
   "port": 3030,
-  "fileDir": "../public"
+  "root": "./wwwroot",
+  "dateDir": "YYYYMMDD"
 }
