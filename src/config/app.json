@@ -1,5 +1,6 @@
 {
   "port": 3030,
+  "host": "localhost",
   "root": "./wwwroot",
-  "dateDir": "YYYYMMDD"
+  "dateDirFormat": "YYYYMMDD"
 }
