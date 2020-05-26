@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 跨域
-var cors = require('cors')
+var cors = require("cors");
 app.use(cors());
 
 // API文档
@@ -39,5 +39,7 @@ app.use(async (err, req, res, next) => {
 });
 // 启动http服务
 const port = appConfig.port || 3030;
-const host = appConfig.host || '0.0.0.0';
-app.listen(port, host, () => console.log(`Server @ http://${host}:${port} started!`));
+const host = appConfig.host || "localhost";
+app.listen(port, host, () =>
+  console.log(`Server @ http://${host}:${port} started!`)
+);

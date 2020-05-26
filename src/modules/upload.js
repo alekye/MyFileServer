@@ -18,8 +18,8 @@ upload.init = (app) => {
   // 上传文件
   app.post(API_UPLOAD, async (req, res) => {
     let relativeDir = fileDir;
-    if (appConfig.dateDir) {
-      relativeDir = path.join(relativeDir, moment().format(appConfig.dateDir));
+    if (appConfig.dateDirFormat) {
+      relativeDir = path.join(relativeDir, moment().format(appConfig.dateDirFormat));
     }
     const fullDir = path.join(rootDir, relativeDir);
     if (!fs.existsSync(fullDir)) {
