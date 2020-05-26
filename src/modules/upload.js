@@ -13,8 +13,8 @@ const fileDir = "file";
 const upload = {};
 
 upload.init = (app) => {
-  const rootDir = path.join(process.mainModule.path, appConfig.root);
-  log.info("rootDir = ", rootDir);
+  const rootDir = Config.getRootDir();
+  log.info("rootDir 2 = ", rootDir);
   // 上传文件
   app.post(API_UPLOAD, async (req, res) => {
     let relativeDir = fileDir;

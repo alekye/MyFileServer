@@ -1,7 +1,6 @@
 const path = require("path");
 const express = require("express");
 const Config = require("../Utils/Config");
-const appConfig = Config.load("app.json");
 
 // 静态文件配置
 var options = {
@@ -16,7 +15,7 @@ var options = {
   }
 };
 
-const rootDir = path.join(process.mainModule.path, appConfig.root);
+const rootDir = Config.getRootDir();
 console.log("rootDir = ", rootDir);
 
 module.exports = express.static(rootDir, options);
