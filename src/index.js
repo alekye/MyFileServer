@@ -45,3 +45,5 @@ const host = appConfig.host || "localhost";
 app.listen(port, host, () =>
   log.info(`Server: v${appVersion} @http://${host}:${port} started!`)
 );
+
+console.log("process NODE_ENV = ", process.env.NODE_ENV);

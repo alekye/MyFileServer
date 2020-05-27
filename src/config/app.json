@@ -3,7 +3,7 @@
   "port": 3030,
   "host": "localhost",
   "url":"/file/upload",
-  "root": "./wwwroot",
+  "root": "/mnt/upload",
   "fileDir":"file",
   "dateDirFormat": "YYYYMMDD",
   "maxFileSize": 524288000

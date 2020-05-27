@@ -21,13 +21,18 @@ conf.load = (fileName) => {
 conf.getRootDir = () => {
   const appConfig = conf.load("app.json");
   let rootDir = "/tmp";
-  if (appConfig.root) {
-    if (path.isAbsolute(appConfig.root)) {
-      rootDir = appConfig.root;
-    } else {
-      rootDir = path.join(process.mainModule.path, appConfig.root);
+  if (process.env.NODE_ENV === "development") {
+    rootDir = path.join(process.mainModule.path, "./wwwroot");
+  } else {
+    if (appConfig.root) {
+      if (path.isAbsolute(appConfig.root)) {
+        rootDir = appConfig.root;
+      } else {
+        rootDir = path.join(process.mainModule.path, appConfig.root);
+      }
     }
   }
+
   return rootDir;
 };
 
