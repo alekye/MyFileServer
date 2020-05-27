@@ -7,8 +7,9 @@ const Config = require("../Utils/Config");
 const appConfig = Config.load("app.json");
 const moment = require("moment");
 
-const API_UPLOAD = "/file/upload";
-const fileDir = "file";
+const API_UPLOAD = appConfig.url || "/file/upload";
+const fileDir = appConfig.fileDir || "file";
+const MAX_FILE_SIZE = appConfig.maxFileSize || 209715200; // 200 * 1024 * 1024
 
 const upload = {};
 
@@ -19,7 +20,10 @@ upload.init = (app) => {
   app.post(API_UPLOAD, async (req, res) => {
     let relativeDir = fileDir;
     if (appConfig.dateDirFormat) {
-      relativeDir = path.join(relativeDir, moment().format(appConfig.dateDirFormat));
+      relativeDir = path.join(
+        relativeDir,
+        moment().format(appConfig.dateDirFormat)
+      );
     }
     const fullDir = path.join(rootDir, relativeDir);
     if (!fs.existsSync(fullDir)) {
@@ -32,7 +36,7 @@ upload.init = (app) => {
       uploadDir: fullDir,
       multiples: true,
       keepExtensions: true,
-      maxFileSize: 10 * 1024 * 1024, // 10mb
+      maxFileSize: MAX_FILE_SIZE, // 10mb
       maxFields: 100,
       maxFieldsSize: 1 * 1024 * 1024,
     });

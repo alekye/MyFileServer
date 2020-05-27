@@ -1,6 +1,9 @@
 {
   "port": 3030,
   "host": "localhost",
+  "url":"/file/upload",
   "root": "./wwwroot",
-  "dateDirFormat": "YYYYMMDD"
+  "fileDir":"file",
+  "dateDirFormat": "YYYYMMDD",
+  "maxFileSize": 524288000
 }
