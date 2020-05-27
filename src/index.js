@@ -6,6 +6,8 @@ const log = require("./modules/logger");
 
 const app = express();
 
+const appVersion = appConfig.version || "1.0.0";
+
 // 把body解析成json对象
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,5 +43,5 @@ app.use(async (err, req, res, next) => {
 const port = appConfig.port || 3030;
 const host = appConfig.host || "localhost";
 app.listen(port, host, () =>
-  console.log(`Server @ http://${host}:${port} started!`)
+  log.info(`Server: v${appVersion} @http://${host}:${port} started!`)
 );

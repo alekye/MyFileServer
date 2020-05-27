@@ -1,4 +1,5 @@
 {
+  "version": "2.0.11",
   "port": 3030,
   "host": "localhost",
   "url":"/file/upload",
