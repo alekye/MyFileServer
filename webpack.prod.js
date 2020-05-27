@@ -23,7 +23,7 @@ const config = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { from: "src/wwwroot/index.html", to:"wwwroot/index.html" },
-      { from: "src/config", to:"config" }
+      { from: "src/config/app.json", to:"config/app.json" }
     ]),
     new webpack.DefinePlugin({ "global.GENTLY": false })
   ],

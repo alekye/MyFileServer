@@ -1,8 +1,10 @@
 const express = require("express");
 require("express-async-errors");
 const Config = require("./Utils/Config");
-const appConfig = Config.load("app.json");
+const appConfig = Config.getAppConfig();
 const log = require("./modules/logger");
+
+log.info("index app config = ", appConfig);
 
 const app = express();
 
@@ -42,8 +44,7 @@ app.use(async (err, req, res, next) => {
 // 启动http服务
 const port = appConfig.port || 3030;
 const host = appConfig.host || "localhost";
-app.listen(port, host, () =>
-  log.info(`Server: v${appVersion} @http://${host}:${port} started!`)
-);
-
-console.log("process NODE_ENV = ", process.env.NODE_ENV);
+app.listen(port, host, () => {
+  log.info("process NODE_ENV = ", process.env.NODE_ENV);
+  log.info(`Server: v${appVersion} @http://${host}:${port} started!`);
+});

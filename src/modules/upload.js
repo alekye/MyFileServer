@@ -4,7 +4,7 @@ const log = require("./logger");
 const path = require("path");
 const fs = require("fs");
 const Config = require("../Utils/Config");
-const appConfig = Config.load("app.json");
+const appConfig = Config.getAppConfig();
 const moment = require("moment");
 
 const API_UPLOAD = appConfig.url || "/file/upload";
@@ -14,8 +14,8 @@ const MAX_FILE_SIZE = appConfig.maxFileSize || 209715200; // 200 * 1024 * 1024
 const upload = {};
 
 upload.init = (app) => {
-  const rootDir = Config.getRootDir();
-  log.info("rootDir 2 = ", rootDir);
+  const rootDir = appConfig.root;
+  log.info("upload dir = ", rootDir);
   // 上传文件
   app.post(API_UPLOAD, async (req, res) => {
     let relativeDir = fileDir;

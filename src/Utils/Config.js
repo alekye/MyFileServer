@@ -3,14 +3,14 @@ const path = require("path");
 
 const conf = {};
 
-function stripBOM(content) {
+const stripBOM = (content) => {
   if (content.charCodeAt(0) === 0xfeff) {
     content = content.slice(1);
   }
   return content;
 }
-
-conf.load = (fileName) => {
+// 加载json文件
+const loadJsonFile = (fileName) => {
   const filePath = path.join(process.mainModule.path, "config", fileName);
   // console.log('filePath = ', filePath);
   const content = fs.readFileSync(filePath, "utf8");
@@ -18,22 +18,26 @@ conf.load = (fileName) => {
   return jsonObject;
 };
 
-conf.getRootDir = () => {
-  const appConfig = conf.load("app.json");
-  let rootDir = "/tmp";
-  if (process.env.NODE_ENV === "development") {
-    rootDir = path.join(process.mainModule.path, "./wwwroot");
-  } else {
-    if (appConfig.root) {
-      if (path.isAbsolute(appConfig.root)) {
-        rootDir = appConfig.root;
-      } else {
-        rootDir = path.join(process.mainModule.path, appConfig.root);
-      }
+// 获取App的配置信息
+const AppConfigHandler = {};
+AppConfigHandler.get = (target, prop, receiver) => {
+  const val = target[prop];
+  if (prop === 'root' && val) {
+    if (!path.isAbsolute(val)) {
+      return path.join(process.mainModule.path, val);
     }
   }
+  return val;
+}
+conf.getAppConfig = () => {
+  let appConfig = loadJsonFile("app.json");
+  if (process.env.NODE_ENV === "development") {
+    const devConfig = loadJsonFile("dev.json");
+    appConfig = Object.assign(appConfig, devConfig);
+  }
 
-  return rootDir;
-};
+  let fixedConfig = new Proxy(appConfig, AppConfigHandler);
+  return fixedConfig;
+}
 
 module.exports = conf;

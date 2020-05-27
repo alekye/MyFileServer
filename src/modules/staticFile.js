@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const Config = require("../Utils/Config");
+const appConfig = Config.getAppConfig();
+const log = require("./logger");
 
 // 静态文件配置
 var options = {
@@ -15,7 +17,7 @@ var options = {
   }
 };
 
-const rootDir = Config.getRootDir();
-console.log("rootDir = ", rootDir);
+const rootDir = appConfig.root;
+log.info("static file dir = ", rootDir);
 
 module.exports = express.static(rootDir, options);
