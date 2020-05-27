@@ -2,13 +2,14 @@ const path = require("path");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const nodeExternals = require('webpack-node-externals');
+const webpack = require("webpack");
+// const nodeExternals = require('webpack-node-externals');
 
 const targetDir = "./dist";
 
 const config = {
-  mode: "development",
-  // mode: "production",
+  // mode: "development",
+  mode: "production",
   entry: {
     index: "./src/index.js"
   },
@@ -21,9 +22,10 @@ const config = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: "src/wwwroot", to:"wwwroot" },
-      { from: "src/config", to:"config" }
-    ])
+      { from: "src/wwwroot/index.html", to:"wwwroot/index.html" },
+      { from: "src/config/app.json5", to:"config/app.json5" }
+    ]),
+    new webpack.DefinePlugin({ "global.GENTLY": false })
   ],
 };
 

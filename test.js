@@ -1,31 +1,18 @@
-console.log(process.env.NODE_ENV);
-const obj = {
-  name: 'alek'
-}
+const path = require("path");
+const fs = require("fs");
+const JSON5 = require("json5");
 
-const config = require("./src/config/app.json");
-// console.log("config = ", config);
+const loadJsonFile = (fileName) => {
+  const filePath = path.join(process.mainModule.path, fileName);
+  // console.log('filePath = ', filePath);
+  const content = fs.readFileSync(filePath, "utf8");
+  return content;
+  // const jsonObject = JSON.parse(stripBOM(content));
+  // return jsonObject;
+};
 
-// console.log('obj name = ', obj.name);
+const data = loadJsonFile("./src/config/app.json");
+console.log("data = ", data);
 
-// const handler = {}
-// handler.get = function (target, prop, receiver) {
-//   // console.log("target = ", target);
-//   // console.log("prop = ", prop);
-//   // console.log("receiver = ", receiver);
-//   // return "alelkye";
-//   if (prop === 'root') {
-//     return "alekye";
-//   }
-//   return target[prop];
-// }
-
-// const fixedConfig = new Proxy(config, handler);
-// console.log("fixedConfig == ", fixedConfig);
-// console.log('version  = ', fixedConfig.version);
-// console.log('fixed root = ', fixedConfig.root);
-// console.log('dateDirFormat = ', fixedConfig.dateDirFormat);
-
-const Config = require("./src/Utils/Config");
-const appConfig = Config.getAppConfig();
-console.log("appConfig = ", appConfig);
+const obj = JSON5.parse(data);
+console.log("obj = ", obj);

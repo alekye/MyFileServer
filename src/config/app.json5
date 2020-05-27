@@ -1,0 +1,10 @@
+{
+  version: "2.0.13",
+  port: 3030, // 端口号
+  host: "localhost", // 绑定的地址
+  url: "/file/upload", // API路由
+  root: "/mnt/upload", // 根目录，支持绝对路径和相对路径
+  fileDir: "file", // 上传文件所在的文件夹
+  dateDirFormat: "YYYYMMDD", // 按日期分目录，配置日期格式
+  maxFileSize: 524288000, // 文件大小 500M = 500 * 1024 * 1024
+}

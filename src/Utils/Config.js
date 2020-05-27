@@ -1,6 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
+const Json5Module = require("json5"); // webpack 打包后，添加了 default
+const JSON5 = Json5Module.default || Json5Module;
+
+console.log("JSON5 === ", JSON5);
+
 const conf = {};
 
 const stripBOM = (content) => {
@@ -14,7 +19,7 @@ const loadJsonFile = (fileName) => {
   const filePath = path.join(process.mainModule.path, "config", fileName);
   // console.log('filePath = ', filePath);
   const content = fs.readFileSync(filePath, "utf8");
-  const jsonObject = JSON.parse(stripBOM(content));
+  const jsonObject = JSON5.parse(stripBOM(content));
   return jsonObject;
 };
 
@@ -30,9 +35,9 @@ AppConfigHandler.get = (target, prop, receiver) => {
   return val;
 }
 conf.getAppConfig = () => {
-  let appConfig = loadJsonFile("app.json");
+  let appConfig = loadJsonFile("app.json5");
   if (process.env.NODE_ENV === "development") {
-    const devConfig = loadJsonFile("dev.json");
+    const devConfig = loadJsonFile("dev.json5");
     appConfig = Object.assign(appConfig, devConfig);
   }
 
