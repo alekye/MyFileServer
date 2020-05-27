@@ -7,4 +7,5 @@
   fileDir: "file", // 上传文件所在的文件夹
   dateDirFormat: "YYYYMMDD", // 按日期分目录，配置日期格式
   maxFileSize: 524288000, // 文件大小 500M = 500 * 1024 * 1024
+  pm2Cluster: true, // 是否运行在pm2集群模式
 }
