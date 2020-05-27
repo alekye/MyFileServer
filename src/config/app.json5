@@ -1,5 +1,5 @@
 {
-  version: "2.0.13",
+  version: "3.1.13",
   port: 3030, // 端口号
   host: "localhost", // 绑定的地址
   url: "/file/upload", // API路由
